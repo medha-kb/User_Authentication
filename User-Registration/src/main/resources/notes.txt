@@ -1,0 +1,21 @@
+ If there's a value inside the Optional, map will apply the given function to that value and wrap the result back into another Optional. 
+    
+    A practical breakdown of the getCurrentUserId() method:    
+    Optional.ofNullable(SecurityContextHolder.getContext().getAuthentication()) : This tries to get the Authentication object and wraps it in an Optional. If the Authentication object is null, the Optional is empty.
+    .map(Authentication::getPrincipal) 
+    This tries to get the Principal from the Authentication object. If the Authentication object exists, we'll get an Optional containing the Principal. If it was empty to begin with, we'll still have an empty Optional.    
+    .filter(UserDetailsImpl.class::isInstance)
+    
+    This checks if the Principal is of type UserDetailsImpl. If it's not, the Optional becomes empty.
+    
+    java
+    
+    .map(UserDetailsImpl.class::cast)
+    
+    If the Principal was of type UserDetailsImpl, this casts it accordingly. If not, this step is skipped (because the Optional would be empty).
+    
+    java
+    
+    .map(UserDetailsImpl::getId)
+    
+    Finally, this tries to get the ID from the UserDetailsImpl. If there was a UserDetailsImpl object, we'll get an Optional containing the ID. Otherwise, we'll have an empty Optional */
